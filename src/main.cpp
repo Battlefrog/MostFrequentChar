@@ -1,11 +1,17 @@
 #include <iostream>
 #include <string>
+#include <sstream>
 
 struct Character
 {
     int frequency; /// Number of times the character appears.
     char character; /// Actual character.
 };
+
+void print_character_information(Character c)
+{
+    printf("Most Frequent Character: '%c'\nFrequency of '%c': %d\n", c.character, c.character, c.frequency);
+}
 
 // O(3n)
 Character max_character(std::string input)
@@ -55,10 +61,28 @@ void input_string()
     std::getline(std::cin, line);
 
     Character c = max_character(line);
-    printf("Most Frequent Character: '%c'\nFrequency of '%c': %d\n", c.character, c.character, c.frequency);
+    print_character_information(c);
 }
 
 int main(int argc, char *argv[])
 {
-    input_string();
+    if (argc < 2)
+    {
+        input_string();
+    }
+    else
+    {
+        std::stringstream args;
+        std::string str;
+
+        for (int i = 1; i < argc; i++)
+        {
+            args << argv[i] << ' ';
+        }
+
+        str = args.str();
+        std::cout << "Interpreted String: " << str << std::endl;
+        Character c = max_character(str);
+        print_character_information(c);
+    }
 }
